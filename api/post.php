@@ -23,11 +23,40 @@ if (!$firstname || $firstname === '') {
 	exit;
 }
 
-$response = json_encode([
-    'success' => true, 
-    'user' => [
-		'firstname' => $firstname,
-	],
-]);
+// database connection credentials
+$user = 'root';
+$password = 'root';
+$dbname = 'supercode';
+$host = '127.0.0.1';
+$port = 3306;
+
+// Create connection
+$conn = mysqli_connect($host, $user, $password, $dbname, $port);
+
+// Check connection
+if (!$conn) {
+	echo json_encode([
+		'success' => false, 
+		'message' => mysqli_connect_error(),
+	]);
+	echo $response;
+	exit;
+}
+
+// MySQL INSERT Statement -> https://www.w3schools.com/sql/sql_insert.asp
+$sql = "INSERT INTO users (firstname, lastname, email, password)
+VALUES ( '$firstname', 'Doe', 'john@example.com', '123')";
+
+if (mysqli_query($conn, $sql)) {
+	$response = json_encode([
+		'success' => true, 
+	]);
+} else {
+  	$response = json_encode([
+		'success' => false, 
+		'message' => "Error: " . $sql . "<br>" . mysqli_error($conn),
+	]);
+}
+mysqli_close($conn);
 
 echo $response;
