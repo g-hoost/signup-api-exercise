@@ -19,7 +19,6 @@ if (!$firstname || $firstname === '') {
 		'success' => false, 
 		'message' => "missing parameters",
 	]);
-	echo $response;
 	exit;
 }
 
