@@ -1,9 +1,14 @@
 const API_POST_URL = 'http://localhost:3000/api/post.php'; // declare your endpoint
 const modal = new bootstrap.Modal(document.querySelector('.modal'));
+let signUpButton = document.querySelector('.signup-form form');
 
 /**
  * Form submit
  */
+
+
+
+
 document.querySelector('.signup-form form').addEventListener('submit', e =>
 {
   e.preventDefault(); // prevent reload current page on submit
@@ -13,8 +18,8 @@ document.querySelector('.signup-form form').addEventListener('submit', e =>
     username: document.querySelector('[name=username]').value,
     email: document.querySelector('[name=email]').value,
     password: document.querySelector('[name=password]').value,
-    confirmPassword: document.querySelector('[name=confirm_password]')
-
+    confirmPassword: document.querySelector('[name=confirm_password]').value,
+    checkBox: document.querySelector('[name=checkBox]'.checked)
   }
 
   // send values to api
@@ -31,7 +36,8 @@ document.querySelector('.signup-form form').addEventListener('submit', e =>
       console.log(res)
 
       // check if response is ok
-
-      modal.show();
+      if (res === 'success') {
+        modal.show();
+      }
     });
 });
