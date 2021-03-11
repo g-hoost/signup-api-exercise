@@ -4,29 +4,34 @@ const modal = new bootstrap.Modal(document.querySelector('.modal'));
 /**
  * Form submit
  */
-document.querySelector('.signup-form form').addEventListener('submit', e => {
+document.querySelector('.signup-form form').addEventListener('submit', e =>
+{
   e.preventDefault(); // prevent reload current page on submit
 
   // get form values
   const data = {
-    firstname: document.querySelector('[name=username]').value,
-    // lastname ...
+    username: document.querySelector('[name=username]').value,
+    email: document.querySelector('[name=email]').value,
+    password: document.querySelector('[name=password]').value,
+    confirmPassword: document.querySelector('[name=confirm_password]')
+
   }
 
   // send values to api
   fetch(API_POST_URL, {
-    method: 'POST', 
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data)
   })
-  .then(res => res.json())
-  .then(res => {
-    console.log (res)
+    .then(res => res.json())
+    .then(res =>
+    {
+      console.log(res)
 
-    // check if response is ok
+      // check if response is ok
 
-    modal.show();
-  });
+      modal.show();
+    });
 });

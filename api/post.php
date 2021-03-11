@@ -7,26 +7,78 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $data = json_decode(file_get_contents("php://input"));
 
-$firstname = '';
+$username = '';
+$email = '';
+$password = '';
 
 // check data
-if(!empty($data->firstname)) {
-	$firstname = $data->firstname;
+if(!empty($data->username)) {
+	$username = $data->username;
 }
 
-if (!$firstname || $firstname === '') {
+if(!empty($data->username)) {
+	$username = $data->username;
+}
+
+if (!$username || $username === '') {
 	echo json_encode([
 		'success' => false, 
 		'message' => "missing parameters",
 	]);
 	exit;
 }
+if(!empty($data->email)) {
+	$email = $data->email;
+}
+
+if (!$email || $email === '') {
+	echo json_encode([
+		'success' => false, 
+		'message' => "missing parameters",
+	]);
+	exit;
+}
+if(!empty($data->password)) {
+	$password = $data->password;
+}
+
+if (!$password || $password === '') {
+	echo json_encode([
+		'success' => false, 
+		'message' => "missing parameters",
+	]);
+	exit;
+}
+if(!empty($data->confirmPassword)) {
+	$confirmPassword = $data->confirmPassword;
+}
+
+if (!$confirmPassword || $confirmPassword === '') {
+	echo json_encode([
+		'success' => false, 
+		'message' => "missing parameters",
+	]);
+	exit;
+	} 
+	elseif ($password != $confirmPassword) {
+		echo json_encode([
+		'success' => false, 
+		'message' => "missing parameters",
+		]);
+	exit;
+}
 
 $response = json_encode([
     'success' => true, 
     'user' => [
-		'firstname' => $firstname,
+		'username' => $username,
+		'email' => $email,
+		'password' => $password,
+		'confirmPassword' => $confirmPassword,
 	],
 ]);
 
 echo $response;
+
+
+//http://localhost:3000/api/post.php
