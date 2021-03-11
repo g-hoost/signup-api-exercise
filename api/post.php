@@ -10,6 +10,7 @@ $data = json_decode(file_get_contents("php://input"));
 $username = '';
 $email = '';
 $password = '';
+$checkbox = '';
 
 // check data
 if(!empty($data->username)) {
@@ -60,13 +61,23 @@ if (!$confirmPassword || $confirmPassword === '') {
 	]);
 	exit;
 	} 
-	elseif ($password != $confirmPassword) {
+	if ($password !== $confirmPassword) {
 		echo json_encode([
 		'success' => false, 
-		'message' => "missing parameters",
+		'message' => "password is wrong",
 		]);
 	exit;
 }
+if(!empty($data->checkbox)) {
+	$checkbox = $data->checkbox;
+}
+if(!isset($_POST['checkbox'])) {
+	echo json_encode([
+		'success' => false, 
+		'message' => "password is wrong",
+	]);
+	exit;
+	}
 
 $response = json_encode([
     'success' => true, 
@@ -75,6 +86,7 @@ $response = json_encode([
 		'email' => $email,
 		'password' => $password,
 		'confirmPassword' => $confirmPassword,
+		'checkbox' => $checkbox,
 	],
 ]);
 
